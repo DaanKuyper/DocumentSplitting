@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31808.319
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentSplitting", "DocumentSplitting\DocumentSplitting.csproj", "{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {51ACD15C-C17F-4611-8DF3-1148BBF2671B}
+	EndGlobalSection
+EndGlobal
