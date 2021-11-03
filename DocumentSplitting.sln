@@ -5,6 +5,21 @@ VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentSplitting", "DocumentSplitting\DocumentSplitting.csproj", "{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Latex", "Latex", "{DA93230C-C239-41ED-BEB0-D586482DC767}"
+	ProjectSection(SolutionItems) = preProject
+		Overleaf.txt = Overleaf.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Personal", "Personal", "{56C1519B-9D08-4E11-94FD-F93154529467}"
+	ProjectSection(SolutionItems) = preProject
+		CV.txt = CV.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Literature", "Literature", "{EFA67F18-0928-4D09-AAA0-2B72F35E0083}"
+	ProjectSection(SolutionItems) = preProject
+		Referenties.txt = Referenties.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
