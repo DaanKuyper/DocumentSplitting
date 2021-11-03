@@ -1,0 +1,3 @@
+ The very secret api that rijksoverheid doesn't want to F'ing document, aka "EXACTLY WHAT I NEEDED" or "THE GOAT" :
+
+  https://do-ams3-17.hw.webhare.net/services/wobcovid19-prod-1/search/?first=0&count=100&orderby=publicationdate

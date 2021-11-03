@@ -1,0 +1,40 @@
+{
+  "id": "f6a6f1e9d73ed2d0e66d22f1312a7641",
+  "url": "https://wobcovid19.rijksoverheid.nl/publicaties/f6a6f1e9d73ed2d0e66d22f1312a7641/",
+  "title": "Wob-besluit onderhandelingen KLM-steunmaatregelen",
+  "summary": "Besluit op een verzoek om informatie inzake de onderhandelingen KLM-steunmaatregelen met betrekking tot de arbeidsvoorwaarden. Het verzoek is gedaan op basis van de Wet openbaarheid van bestuur (Wob).",
+  "date": "2021-02-12",
+  "fileName": "2021-02-12_f6a6f1e9d73ed2d0e66d22f1312a7641.json",
+  "documents": [
+    {
+      "Name": "Besluit op Wob-verzoek",
+      "Href": "besluit-op-wob-verzoek.pdf",
+      "Url": "https://wobcovid19.rijksoverheid.nl/publicaties/f6a6f1e9d73ed2d0e66d22f1312a7641/besluit-op-wob-verzoek.pdf",
+      "FileType": "PDF",
+      "Pages": "9",
+      "Size": "141 kB",
+      "DocumentType": "Wob-verzoek",
+      "Date": "12-02-2021"
+    },
+    {
+      "Name": "Inventarislijst",
+      "Href": "inventarislijst.pdf",
+      "Url": "https://wobcovid19.rijksoverheid.nl/publicaties/f6a6f1e9d73ed2d0e66d22f1312a7641/inventarislijst.pdf",
+      "FileType": "PDF",
+      "Pages": "1",
+      "Size": "82 kB",
+      "DocumentType": "Wob-verzoek",
+      "Date": "12-02-2021"
+    },
+    {
+      "Name": "deels openbare documenten",
+      "Href": "deels-openbare-documenten.pdf",
+      "Url": "https://wobcovid19.rijksoverheid.nl/publicaties/f6a6f1e9d73ed2d0e66d22f1312a7641/deels-openbare-documenten.pdf",
+      "FileType": "PDF",
+      "Pages": "15",
+      "Size": "2 MB",
+      "DocumentType": "Wob-verzoek",
+      "Date": "12-02-2021"
+    }
+  ]
+}
