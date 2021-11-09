@@ -13,16 +13,16 @@ GetDocumentList(API_URL);
 class WOB {
   constructor(document) {
     // Substring is taken to remove the # from the id.
-    this.id = document['link'].substring(1);
-    this.url = `${BASE_URL}/publicaties/${this.id}/`;
+    this.Id = document['link'].substring(1);
+    this.Url = `${BASE_URL}/publicaties/${this.Id}/`;
 
-    this.title = document['publication']['title'];
-    this.summary = document['publication']['summary'];
+    this.Title = document['publication']['title'];
+    this.Summary = document['publication']['summary'];
 
     // Substring is taken to only retrieve yyyymmdd from date.
-    this.date = document['publication']['publicationdate'].substring(0, 10);
+    this.Date = document['publication']['publicationdate'].substring(0, 10);
 
-    this.fileName = `${this.date}_${this.id}.json`;
+    this.FileName = `${this.Date}_${this.Id}.json`;
   }
 
   parse(data) {
@@ -35,7 +35,7 @@ class WOB {
       documents.push(this.parseDocument(html, publication))
     });
 
-    this.documents = documents;
+    this.Documents = documents;
   }
   
   parseDocument(html, publication) {
@@ -52,7 +52,7 @@ class WOB {
     let document = {
       Name: name,
       Href: href,
-      Url: `${this.url}${href}`,
+      Url: `${this.Url}${href}`,
 
       FileType: fileType.trim(),
       Pages: pages.replace("pagina", "").replace("'s", "").trim(),
@@ -68,7 +68,7 @@ class WOB {
 async function GetDocumentData(document) {
   // Retrieves HTML from the given URL and formats into document objects.
   let wob = new WOB(document);
-  let result = await axios.get(wob.url);
+  let result = await axios.get(wob.Url);
 
   wob.parse(result.data);
   saveWOBFile(wob);
@@ -94,7 +94,7 @@ async function GetDocumentList(url) {
 
 function saveWOBFile(wob) {
   var path = require('path');
-  var location = `..\\WOB\\${wob.fileName}`;
+  var location = `..\\WOB\\${wob.FileName}`;
 
   var json = JSON.stringify(wob);
 

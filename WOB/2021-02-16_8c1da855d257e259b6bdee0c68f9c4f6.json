@@ -1,1 +1,20 @@
-{"id":"8c1da855d257e259b6bdee0c68f9c4f6","url":"https://wobcovid19.rijksoverheid.nl/publicaties/8c1da855d257e259b6bdee0c68f9c4f6/","title":"Wob-besluit Gespreksverslagen bijeenkomsten MBVOM","summary":"Besluit op een verzoek om informatie inzake verslagen van bijeenkomsten van minister Arie Slob, o.a. ten aanzien van ventilatie op scholen.\nHet betreft een verzoek op grond van de Wet openbaarheid van","date":"2021-02-16","fileName":"2021-02-16_8c1da855d257e259b6bdee0c68f9c4f6.json","documents":[{"Name":"Besluit Wob-verzoek gespreksverslagen MBVOM","Href":"besluit-wob-verzoek-gespreksverslagen-mbvom.pdf","Url":"https://wobcovid19.rijksoverheid.nl/publicaties/8c1da855d257e259b6bdee0c68f9c4f6/besluit-wob-verzoek-gespreksverslagen-mbvom.pdf","FileType":"PDF","Pages":"4","Size":"715 kB","DocumentType":"Wob-verzoek","Date":"16-02-2021"}]}
+{
+  "Id": "8c1da855d257e259b6bdee0c68f9c4f6",
+  "Url": "https://wobcovid19.rijksoverheid.nl/publicaties/8c1da855d257e259b6bdee0c68f9c4f6/",
+  "Title": "Wob-besluit Gespreksverslagen bijeenkomsten MBVOM",
+  "Summary": "Besluit op een verzoek om informatie inzake verslagen van bijeenkomsten van minister Arie Slob, o.a. ten aanzien van ventilatie op scholen.\nHet betreft een verzoek op grond van de Wet openbaarheid van",
+  "Date": "2021-02-16",
+  "FileName": "2021-02-16_8c1da855d257e259b6bdee0c68f9c4f6.json",
+  "Documents": [
+    {
+      "Name": "Besluit Wob-verzoek gespreksverslagen MBVOM",
+      "Href": "besluit-wob-verzoek-gespreksverslagen-mbvom.pdf",
+      "Url": "https://wobcovid19.rijksoverheid.nl/publicaties/8c1da855d257e259b6bdee0c68f9c4f6/besluit-wob-verzoek-gespreksverslagen-mbvom.pdf",
+      "FileType": "PDF",
+      "Pages": "4",
+      "Size": "715 kB",
+      "DocumentType": "Wob-verzoek",
+      "Date": "16-02-2021"
+    }
+  ]
+}

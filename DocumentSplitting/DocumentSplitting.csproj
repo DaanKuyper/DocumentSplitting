@@ -8,4 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DocumentModels\DocumentModels.csproj" />
+  </ItemGroup>
+
 </Project>
