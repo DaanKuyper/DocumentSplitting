@@ -1,11 +1,8 @@
 ﻿using System.Net;
 using System.Text;
 
-using PdfSharpCore.Pdf;
-using PdfSharpCore.Pdf.Advanced;
-using PdfSharpCore.Pdf.IO;
-using PdfSharpCore.Pdf.Content;
-using PdfSharpCore.Pdf.Content.Objects;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
 
 namespace PdfModels;
 
@@ -13,109 +10,48 @@ public class PdfClass
 {
   public PdfClass(Stream stream)
   {
-    pdfDocument = PdfReader.Open(stream, PdfDocumentOpenMode.ReadOnly);
+    document = new PdfDocument(new PdfReader(stream));
+    documentInfo = document.GetDocumentInfo();
+
+    ParsePages();
   }
 
-  public PdfClass(Stream stream, string url, HttpStatusCode statusCode)
+  public PdfClass(Stream stream, string url, HttpStatusCode statusCode) : this(stream)
   {
     Url = url;
     HttpStatus = statusCode;
-
-    //pdfDocument = PdfReader.Open(stream, PdfDocumentOpenMode.ReadOnly);
-
-
-    // TEMP TEST:
-    var path = @"C:\Users\daan_\source\repos\DocumentSplitting\Literature\besluit-op-wob-verzoek-over-contacten-bedrijfsleven-coronasteunmaatregelen.pdf";
-    using (var _document = PdfReader.Open(path, PdfDocumentOpenMode.ReadOnly))
-    {
-      var result = new StringBuilder();
-
-      var page = _document.Pages[0];
-      ExtractText(ContentReader.ReadContent(page), result);
-      result.AppendLine();
-
-      var text = result.ToString();
-    }
   }
 
-  
-  public void IteratePages()
+
+  void ParsePages()
   {
-    // TODO make better...
-    if (Pages == null)
+    var sb = new StringBuilder();
+
+    for (int i = 1; i <= document.GetNumberOfPages(); ++i)
     {
-      throw new Exception();
+      var page = document.GetPage(i);
+      var text = PdfTextExtractor.GetTextFromPage(page);
+
+      sb.Append(text);
+      sb.AppendLine();
     }
 
-    foreach (var page in pdfDocument.Pages.OfType<PdfPage>())
-    {
-      var cSequence = ContentReader.ReadContent(page);
+    // TODO : 
+    // - Keep track of text relative to page..
+    // - Search pages for keywords to determine type of Page (and document).
+    // - Make overview of different document types and their subjects based on text found in PDF...
 
-      // TODO : hier wordt het interessant...
-      // https://github.com/DavidS/PdfTextract/blob/master/PdfTextract/PdfTextExtractor.cs
-      
-      // TODO;
-      // String values gaan verloren met deze methode...
-      // probeer lokale FILE stream uit te pakken ipv HttpStream.
-      // 
-
-      var result = new StringBuilder();
-      foreach (var cObject in cSequence)
-      {
-        ExtractText(cObject, result);
-        result.AppendLine();
-      }
-      var text = result.ToString();
-    }
+    var result = sb.ToString();
   }
 
 
-  // BEGIN STOLEN REGION...
-  void ExtractText(CObject cObject, StringBuilder result)
-  {
-    if (cObject is COperator)
-    {
-      var cOperator = cObject as COperator;
-      if (cOperator.OpCode.Name == OpCodeName.Tf.ToString())
-      {
-        var font = 
-      }
-      else if (cOperator.OpCode.Name == OpCodeName.Tj.ToString() ||
-               cOperator.OpCode.Name == OpCodeName.TJ.ToString())
-      {
-        foreach (var cOperand in cOperator.Operands)
-        {
-          ExtractText(cOperand, result);
-        }
-      }
-    }
-    else if (cObject is CSequence)
-    {
-      var cSequence = cObject as CSequence;
-      foreach (var element in cSequence)
-      {
-        ExtractText(element, result);
-      }
-    }
-    else if (cObject is CString)
-    {
-      var cString = cObject as CString;
-      result.Append(cString.Value);
-    }
-  }
-  // END REGION...
+  public string Title => documentInfo.GetTitle();
 
+  public string Author => documentInfo.GetAuthor();
 
-  public string Title => pdfDocument.Info.Title;
-  
-  public string Subject => pdfDocument.Info.Subject;
+  public string Subject => documentInfo.GetSubject();
 
-  public string Author => pdfDocument.Info.Author;
-
-  public int PageCount => pdfDocument.PageCount;
-
-
-  public PdfPages Pages => pdfDocument.Pages;
+  public string Keywords => documentInfo.GetKeywords();
 
 
   public string? Url { get; }
@@ -123,5 +59,7 @@ public class PdfClass
   public HttpStatusCode HttpStatus { get; }
 
 
-  readonly PdfDocument pdfDocument;
+  readonly PdfDocument document;
+
+  readonly PdfDocumentInfo documentInfo;
 }

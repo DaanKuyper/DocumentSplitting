@@ -68,8 +68,6 @@ public class StateController
     foreach (var document in wobFile.Documents)
     {
       var pdf = await ParsePdf(document);
-
-      pdf.IteratePages();
     }
   }
 
