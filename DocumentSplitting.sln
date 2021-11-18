@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31808.319
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentSplitting", "DocumentSplitting\DocumentSplitting.csproj", "{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Latex", "Latex", "{DA93230C-C239-41ED-BEB0-D586482DC767}"
 	ProjectSection(SolutionItems) = preProject
 		Latex\Overleaf.txt = Latex\Overleaf.txt
@@ -113,7 +111,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WOB", "WOB", "{27A1AC14-F50
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WobRetrievalTool", "WobRetrievalTool\WobRetrievalTool.njsproj", "{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentModels", "DocumentModels\DocumentModels.csproj", "{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplittingComponents", "DocumentModels\SplittingComponents.csproj", "{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentSplitting", "DocumentSplitting\DocumentSplitting.csproj", "{8D736F33-F28B-4297-856E-4F5787B74C0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WobModels", "WOBData\WobModels.csproj", "{1A3AAE2C-6100-4970-922C-04A49D584FB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfModels", "PdfModels\PdfModels.csproj", "{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,10 +125,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58E3C8AF-4952-4A38-889C-A9F5815C0CCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -133,6 +133,18 @@ Global
 		{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D736F33-F28B-4297-856E-4F5787B74C0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D736F33-F28B-4297-856E-4F5787B74C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D736F33-F28B-4297-856E-4F5787B74C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D736F33-F28B-4297-856E-4F5787B74C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A3AAE2C-6100-4970-922C-04A49D584FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A3AAE2C-6100-4970-922C-04A49D584FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A3AAE2C-6100-4970-922C-04A49D584FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A3AAE2C-6100-4970-922C-04A49D584FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

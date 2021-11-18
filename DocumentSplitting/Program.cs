@@ -1,15 +1,12 @@
-namespace DocumentSplitting
-{
-  internal static class Program
-  {
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
-    [STAThread]
-    static void Main()
-    {
-      ApplicationConfiguration.Initialize();
-      Application.Run(new Form1());
-    }
-  }
-}
+﻿
+using SplittingComponents;
+
+
+string configFile = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar}Config.json";
+
+var state = new StateController(configFile);
+
+await state.ParseWob(state.WobFiles.First());
+
+// See https://aka.ms/new-console-template for more information
+Console.WriteLine("Hello, World!");
