@@ -109,8 +109,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WOB", "WOB", "{27A1AC14-F50
 		WOB\API.txt = WOB\API.txt
 	EndProjectSection
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "WobRetrievalTool", "WobRetrievalTool\WobRetrievalTool.njsproj", "{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplittingComponents", "DocumentModels\SplittingComponents.csproj", "{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentSplitting", "DocumentSplitting\DocumentSplitting.csproj", "{8D736F33-F28B-4297-856E-4F5787B74C0E}"
@@ -127,10 +125,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6EDFEA9-81C7-443A-BDB4-53FA1268EC1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED803CCF-0DF6-4E5F-ABD8-89C475D6BE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
