@@ -22,7 +22,7 @@ public class StateController
 
   public async Task<WobFileList> RetrieveWobFiles()
   {
-    var result = new WobFileList(HttpControl);
+    var result = new WobFileList();
 
     if (string.IsNullOrEmpty(Config.ApiUrl))
     {
@@ -76,7 +76,7 @@ public class StateController
 
   public WobFileList ReadJsonWobFiles()
   {
-    var result = new WobFileList(HttpControl);
+    var result = new WobFileList();
 
     if (string.IsNullOrEmpty(Config.LocalStoragePath))
     {
@@ -109,7 +109,7 @@ public class StateController
     return result;
   }
 
-  
+
   public void WriteJsonWobFiles()
   {
     if (string.IsNullOrEmpty(Config.LocalStoragePath))
@@ -128,7 +128,78 @@ public class StateController
   }
 
 
-  public async Task ParseWobFileList() => await WobFiles.Parse();
+  public async Task WriteReportCsv()
+  {
+    if (string.IsNullOrEmpty(Config.LocalReportFile))
+    {
+      // TODO prettify...
+      throw new Exception("missing json path in configuration...");
+    }
+
+    var csv = new StringBuilder();
+    csv.AppendLine(
+      "WobFile, WobURL, WobTitle, WobDate," +
+      "PdfName, PdfUrl, PdfDate, Size, PdfTitle, PdfPages (meta), WordsPerPage"
+    );
+
+    for (var index = 0; index < WobFiles.Count; index++)
+    {
+      var wobFile = WobFiles[index];
+      if (wobFile.Documents == null)
+      {
+        csv.AppendLine($"{wobFile.Id},{wobFile.Url},{wobFile.Title},{wobFile.Date},,,,,,,");
+      }
+      else
+      {
+        foreach (var document in wobFile.Documents)
+        {
+          var pdf = await ParsePdf(document);
+
+          // TODO desperately prettify...
+          if (pdf != null)
+          {
+            csv.AppendLine(
+              $"{wobFile.Id},{wobFile.Url},{wobFile.Title?.Replace(',', '.')},{wobFile.Date}," +
+              $"{document.Name?.Replace(',', '.')},{document.Url},{document.Date},{document.Size}," +
+              $"{pdf.Title?.Replace(',', '.')},{pdf.PageCount} ({document.MetaPageCount}),{pdf.AverageWordsPerPage}"
+            );
+          }
+          else
+          {
+            csv.AppendLine(
+              $"{wobFile.Id},{wobFile.Url},{wobFile.Title?.Replace(',', '.')},{wobFile.Date}," +
+              $"{document.Name?.Replace(',', '.')},{document.Url},{document.Date},{document.Size}," +
+              $"ERROR,0 ({document.MetaPageCount}),0"
+            );
+          }
+        }
+      }
+      Console.WriteLine($"[{index}] - {wobFile.Id} Passed");
+    }
+
+    File.WriteAllText(Config.LocalReportFile, csv.ToString());
+  }
+
+
+  public async Task<PdfDocumentClass> ParsePdf(Document document)
+  {
+    if (string.IsNullOrWhiteSpace(document.Url))
+    {
+      // TODO prettify...
+      throw new Exception($"missing Url : {document}");
+    }
+
+    try
+    {
+      return await HttpControl.RetrievePdf(document.Url);
+    }
+    // TODO prettify...
+    catch (Exception ex)
+    {
+      return null;
+    }
+  }
+
 
 
   public WobFileList WobFiles { get; set; }

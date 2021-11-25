@@ -6,7 +6,7 @@ string configFile = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar
 
 var state = new StateController(configFile);
 
-await state.ParseWobFileList();
+await state.WriteReportCsv();
 
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");

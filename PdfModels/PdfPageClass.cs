@@ -6,8 +6,9 @@ public class PdfPageClass
   {
     Page = page;
 
-    var strategy = new Strategy
-    Content = PdfTextExtractor.GetTextFromPage(Page,);
+    var strategy = new SimpleTextExtractionStrategy();
+
+    Content = PdfTextExtractor.GetTextFromPage(Page, strategy);
     WordCount = Content.Split().Length;
   }
 

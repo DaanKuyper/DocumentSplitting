@@ -5,5 +5,7 @@
 
   "LocalStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB",
 
-  "RetrieveOnStart": true
+  "LocalReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\OverviewReport.csv",
+
+  "RetrieveOnStart": false
 }

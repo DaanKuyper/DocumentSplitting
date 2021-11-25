@@ -27,6 +27,8 @@ public class PdfDocumentClass
       
       sb.Append(page.Content);
       sb.AppendLine();
+
+      Pages.Add(page);
     }
 
     // TODO : 
@@ -38,9 +40,9 @@ public class PdfDocumentClass
   }
 
 
+  public float AverageWordsPerPage => Pages.Sum(page => page.WordCount) / PageCount;
 
-  public float AverageWordPerPage => Pages.Sum(page => page.WordCount) / Pages.Count;
-
+  public int PageCount => Pages.Count;
 
 
   public string Title => documentInfo.GetTitle();

@@ -29,4 +29,6 @@ public class Configuration
   public bool RetrieveOnStart { get; set; } = false;
 
   public string LocalStoragePath { get; set; } = string.Empty;
+
+  public string LocalReportFile { get; set; } = string.Empty;
 }

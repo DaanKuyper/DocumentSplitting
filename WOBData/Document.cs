@@ -50,7 +50,8 @@ public class Document
   public string? Date { get; set; }
 
 
-  public int PageCount => int.TryParse(Pages, out int result) ? result : 0;
+  public int MetaPageCount => int.TryParse(Pages, out int result) ? result : 0;
+
 
   public override string ToString() => Name ?? "Únknown";
 
