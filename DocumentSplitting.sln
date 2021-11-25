@@ -117,7 +117,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentSplitting", "Docume
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WobModels", "WOBData\WobModels.csproj", "{1A3AAE2C-6100-4970-922C-04A49D584FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfModels", "PdfModels\PdfModels.csproj", "{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfModels", "PdfModels\PdfModels.csproj", "{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlModels", "HtmlModels\HtmlModels.csproj", "{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +147,10 @@ Global
 		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

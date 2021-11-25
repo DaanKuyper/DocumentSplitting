@@ -6,24 +6,65 @@ public class StateController
   {
     Config = Configuration.Load(configFile);
 
-    HttpControl = new HttpController();
+    HttpControl = new HttpController(Config.BaseUrl, Config.ApiUrl);
 
-    WobFiles = Parse(Config.JsonPath);
-
+    if (Config.RetrieveWobFiles)
+    {
+      WobFiles = Task.Run(RetrieveWobFiles).Result;
+    }
+    else
+    {
+      WobFiles = ParseJsonWobFiles();
+    }
   }
-  
 
-  public static WobFileList Parse(string? jsonPath)
+
+  public async Task<WobFileList> RetrieveWobFiles()
   {
     var result = new WobFileList();
 
-    if (string.IsNullOrEmpty(jsonPath))
+    if (string.IsNullOrEmpty(Config.ApiUrl))
+    {
+      // TODO prettify...
+      throw new Exception("missing API url in configuration...");
+    }
+
+    var jsonString = await HttpControl.RetrieveWobList();
+    var data = JsonSerializer.Deserialize<ApiResultDataList>(jsonString);
+
+    // TODO prettify...
+    if (data == null)
+    {
+      throw new Exception();
+    }
+
+    // TODO prettify...
+    if (data.results == null || data.results.Count == 0)
+    {
+      throw new Exception();
+    }
+
+    foreach (var record in data.results)
+    {
+      var document = await HttpControl.RetrieveWobDocument(record.Id);
+
+    }
+
+    return result;
+  }
+
+
+  public WobFileList ParseJsonWobFiles()
+  {
+    var result = new WobFileList();
+
+    if (string.IsNullOrEmpty(Config.LocalStoragePath))
     {
       // TODO prettify...
       throw new Exception("missing json path in configuration...");
     }
 
-    var fileNames = Directory.GetFiles(jsonPath);
+    var fileNames = Directory.GetFiles(Config.LocalStoragePath);
     if (fileNames.Length == 0)
     {
       // TODO prettify...

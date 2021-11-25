@@ -20,5 +20,15 @@ public class Configuration
     return config;
   }
 
-  public string? JsonPath { get; set; }
+
+  public string? BaseUrl { get; set; }
+
+  public string? ApiUrl { get; set; }
+
+  public bool? RetrieveOnStart { get; set; }
+
+  public string? LocalStoragePath { get; set; }
+
+  [JsonIgnore]
+  public bool RetrieveWobFiles => RetrieveOnStart ?? false;
 }

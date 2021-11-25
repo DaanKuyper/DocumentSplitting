@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HtmlModels\HtmlModels.csproj" />
     <ProjectReference Include="..\PdfModels\PdfModels.csproj" />
     <ProjectReference Include="..\WOBData\WobModels.csproj" />
   </ItemGroup>
