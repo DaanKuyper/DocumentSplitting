@@ -8,20 +8,21 @@ public class StateController
 
     HttpControl = new HttpController(Config.BaseUrl, Config.ApiUrl);
 
-    if (Config.RetrieveWobFiles)
+    if (Config.RetrieveOnStart)
     {
       WobFiles = Task.Run(RetrieveWobFiles).Result;
+      WriteJsonWobFiles();
     }
     else
     {
-      WobFiles = ParseJsonWobFiles();
+      WobFiles = ReadJsonWobFiles();
     }
   }
 
 
   public async Task<WobFileList> RetrieveWobFiles()
   {
-    var result = new WobFileList();
+    var result = new WobFileList(HttpControl);
 
     if (string.IsNullOrEmpty(Config.ApiUrl))
     {
@@ -46,17 +47,36 @@ public class StateController
 
     foreach (var record in data.results)
     {
-      var document = await HttpControl.RetrieveWobDocument(record.Id);
+      var url = HttpControl.WobDocumentUrl(record.Id);
 
+      result.Add(new WobFile(record, await RetrieveDocuments(url), url));
+    }
+
+    return result;
+  }
+
+  public async Task<List<Document>> RetrieveDocuments(string url)
+  {
+    var result = new List<Document>();
+
+    var htmlString = await HttpControl.RetrieveWobDocument(url);
+
+    // TODO prettify...
+    var regex = new Regex("<a class=\"publication__download\" (.*?)/a>");
+    var matches = regex.Matches(htmlString);
+
+    foreach (Match match in matches)
+    {
+      result.Add(new Document(url, match.Value));
     }
 
     return result;
   }
 
 
-  public WobFileList ParseJsonWobFiles()
+  public WobFileList ReadJsonWobFiles()
   {
-    var result = new WobFileList();
+    var result = new WobFileList(HttpControl);
 
     if (string.IsNullOrEmpty(Config.LocalStoragePath))
     {
@@ -89,42 +109,29 @@ public class StateController
     return result;
   }
 
-
-  public async Task ParseWob(WobFile wobFile)
+  
+  public void WriteJsonWobFiles()
   {
-    if (string.IsNullOrWhiteSpace(wobFile.Url))
+    if (string.IsNullOrEmpty(Config.LocalStoragePath))
     {
       // TODO prettify...
-      throw new Exception($"missing Url : {wobFile}");
+      throw new Exception("missing json path in configuration...");
     }
 
-    if (wobFile.Documents == null || wobFile.Documents.Count == 0)
+    foreach (var wobFile in WobFiles)
     {
-      // TODO prettify...
-      throw new Exception("missing wob documents...");
-    }
+      var jsonString = JsonSerializer.Serialize(wobFile);
+      var path = $"{Config.LocalStoragePath}{Path.DirectorySeparatorChar}{wobFile.FileName}";
 
-    // TODO :
-    //  build dictionary containing PDF documents regarding same subject /  other grouping methods...
-    foreach (var document in wobFile.Documents)
-    {
-      var pdf = await ParsePdf(document);
+      File.WriteAllText(path, jsonString);
     }
   }
 
-  public async Task<PdfClass> ParsePdf(Document document)
-  {
-    if (string.IsNullOrWhiteSpace(document.Url))
-    {
-      // TODO prettify...
-      throw new Exception($"missing Url : {document}");
-    }
 
-    return await HttpControl.RetrievePdf(document.Url);
-  }
+  public async Task ParseWobFileList() => await WobFiles.Parse();
 
 
-  public WobFileList WobFiles { get; set; } = new();
+  public WobFileList WobFiles { get; set; }
 
 
   readonly Configuration Config;

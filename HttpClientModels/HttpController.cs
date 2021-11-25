@@ -1,4 +1,6 @@
-﻿namespace SplittingComponents;
+﻿using PdfModels;
+
+namespace HttpClientModels;
 
 public class HttpController
 {
@@ -7,6 +9,7 @@ public class HttpController
     BaseUrl = baseUrl;
     ApiUrl = apiUrl;
   }
+
 
   public async Task<string> RetrieveWobList()
   {
@@ -21,26 +24,20 @@ public class HttpController
   }
 
   
-  public async Task<HtmlClass> RetrieveWobDocument(string id)
+  public async Task<string> RetrieveWobDocument(string url)
   {
-    var (httpResult, mediaType) = await TryRetrieveHttp(WobDocumentUrl(id));
+    var (httpResult, mediaType) = await TryRetrieveHttp(url);
 
     if (mediaType != "text/html")
     {
       throw new HttpContentException("HTML", ApiUrl, mediaType);
     }
 
-    var htmlString = await httpResult.Content.ReadAsStringAsync();
-
-    var test = new (string, string)[] { ("a", "publication__download") };
-
-    HtmlClass.ParseValues(htmlString, test);
-
-    return null;
+    return await httpResult.Content.ReadAsStringAsync();
   }
 
 
-  public async Task<PdfClass> RetrievePdf(string url)
+  public async Task<PdfDocumentClass> RetrievePdf(string url)
   {
     var (httpResult, mediaType) = await TryRetrieveHttp(url);
 
@@ -51,8 +48,9 @@ public class HttpController
 
     using var stream = await httpResult.Content.ReadAsStreamAsync();
 
-    return new PdfClass(stream, url, httpResult.StatusCode);
+    return new PdfDocumentClass(stream, url, httpResult.StatusCode);
   }
+
 
   public async Task<(HttpResponseMessage, string?)> TryRetrieveHttp(string url)
   {
@@ -82,7 +80,9 @@ public class HttpController
     }
   }
 
+
   public string WobDocumentUrl(string id) => $"{BaseUrl}/publicaties/{id}/";
+
 
   private readonly string BaseUrl;
 

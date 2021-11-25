@@ -119,7 +119,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WobModels", "WOBData\WobMod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfModels", "PdfModels\PdfModels.csproj", "{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlModels", "HtmlModels\HtmlModels.csproj", "{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientModels", "HttpClientModels\HttpClientModels.csproj", "{B2FCC23A-EBE6-4D5A-8B15-AE9EDD8984EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,10 +147,10 @@ Global
 		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEDC43F6-CC45-4041-80C0-3EFC8C6DE514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2FCC23A-EBE6-4D5A-8B15-AE9EDD8984EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2FCC23A-EBE6-4D5A-8B15-AE9EDD8984EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2FCC23A-EBE6-4D5A-8B15-AE9EDD8984EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2FCC23A-EBE6-4D5A-8B15-AE9EDD8984EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

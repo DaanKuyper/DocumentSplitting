@@ -1,14 +1,8 @@
-﻿using System.Net;
-using System.Text;
+﻿namespace PdfModels;
 
-using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Parser;
-
-namespace PdfModels;
-
-public class PdfClass
+public class PdfDocumentClass
 {
-  public PdfClass(Stream stream)
+  public PdfDocumentClass(Stream stream)
   {
     document = new PdfDocument(new PdfReader(stream));
     documentInfo = document.GetDocumentInfo();
@@ -16,7 +10,7 @@ public class PdfClass
     ParsePages();
   }
 
-  public PdfClass(Stream stream, string url, HttpStatusCode statusCode) : this(stream)
+  public PdfDocumentClass(Stream stream, string url, HttpStatusCode statusCode) : this(stream)
   {
     Url = url;
     HttpStatus = statusCode;
@@ -29,10 +23,9 @@ public class PdfClass
 
     for (int i = 1; i <= document.GetNumberOfPages(); ++i)
     {
-      var page = document.GetPage(i);
-      var text = PdfTextExtractor.GetTextFromPage(page);
-
-      sb.Append(text);
+      var page = new PdfPageClass(document.GetPage(i));
+      
+      sb.Append(page.Content);
       sb.AppendLine();
     }
 
@@ -45,6 +38,11 @@ public class PdfClass
   }
 
 
+
+  public float AverageWordPerPage => Pages.Sum(page => page.WordCount) / Pages.Count;
+
+
+
   public string Title => documentInfo.GetTitle();
 
   public string Author => documentInfo.GetAuthor();
@@ -52,6 +50,9 @@ public class PdfClass
   public string Subject => documentInfo.GetSubject();
 
   public string Keywords => documentInfo.GetKeywords();
+
+
+  public List<PdfPageClass> Pages { get; set; } = new();
 
 
   public string? Url { get; }

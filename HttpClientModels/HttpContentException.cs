@@ -1,4 +1,4 @@
-﻿namespace SplittingComponents;
+﻿namespace HttpClientModels;
 
 public class HttpContentException : Exception
 {
