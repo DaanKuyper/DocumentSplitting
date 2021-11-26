@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Personal", "Personal", "{56
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Literature", "Literature", "{EFA67F18-0928-4D09-AAA0-2B72F35E0083}"
 	ProjectSection(SolutionItems) = preProject
+		Literature\Afstudeer_Thesis___Document_Splitting___Project_Plan.pdf = Literature\Afstudeer_Thesis___Document_Splitting___Project_Plan.pdf
 		Literature\Handleiding Afstudeerproject Bachelor Informatica - periode 2+3 2021.pdf = Literature\Handleiding Afstudeerproject Bachelor Informatica - periode 2+3 2021.pdf
 		Literature\Referenties.txt = Literature\Referenties.txt
 	EndProjectSection
