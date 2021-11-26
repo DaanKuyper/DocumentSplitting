@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PdfModels\PdfModels.csproj" />
+  </ItemGroup>
+
 </Project>

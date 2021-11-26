@@ -1,5 +1,8 @@
 ﻿http://code.google.com/p/tesseract-ocr/
 
+PDF Explained...
+https://www.syncfusion.com/succinctly-free-ebooks/pdf/text-operators
+
 R. Smith, 
 "An Overview of the Tesseract OCR Engine," 
 Ninth International Conference on Document Analysis and Recognition (ICDAR 2007), 

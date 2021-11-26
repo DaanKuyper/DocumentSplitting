@@ -1,0 +1,11 @@
+{
+  "BaseUrl": "https://wobcovid19.rijksoverheid.nl",
+
+  "ApiUrl": "https://do-ams3-17.hw.webhare.net/services/wobcovid19-prod-1/search/?count=200&orderby=publicationdate",
+
+  "LocalStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB",
+
+  "LocalReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\OverviewReport.csv",
+
+  "RetrieveOnStart": true
+}
