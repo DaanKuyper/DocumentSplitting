@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# PDFs files ignored to save storage..
+WOB_Pdfs/*
+
+# Do include PDF folder
+!WOB_Pdfs/.gitkeep

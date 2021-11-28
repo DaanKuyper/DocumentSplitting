@@ -37,26 +37,26 @@ public class HttpController
   }
 
 
-  public async Task<PdfDocumentClass> RetrievePdf(string url)
+  public async Task<Stream> RetrievePdfStream(string url)
   {
-    var (httpResult, mediaType) = await TryRetrieveHttp(url);
+    var (httpResult, mediaType) = await TryRetrieveHttp(url, true);
 
     if (mediaType != "application/pdf")
     {
       throw new HttpContentException("PDF", url, mediaType);
     }
 
-    using var stream = await httpResult.Content.ReadAsStreamAsync();
-
-    return new PdfDocumentClass(stream, url, httpResult.StatusCode);
+    return await httpResult.Content.ReadAsStreamAsync();
   }
 
 
-  public async Task<(HttpResponseMessage, string?)> TryRetrieveHttp(string url)
+  public async Task<(HttpResponseMessage, string?)> TryRetrieveHttp(string url, bool headersOnly = false)
   {
     try
     {
-      var httpResult =  await httpClient.GetAsync(url);
+      var httpResult = headersOnly ? 
+        await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead) :
+        await httpClient.GetAsync(url);
 
       if (!httpResult.IsSuccessStatusCode)
       {

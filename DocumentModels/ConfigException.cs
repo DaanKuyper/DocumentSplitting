@@ -2,7 +2,8 @@
 
 public class ConfigException : Exception
 {
-  public ConfigException(string configFile) : base($"Configuration problem encountered : `{configFile}`")
+  public ConfigException(string message)
+    : base($"Configuration problem encountered : `{message}`")
   {
   }
 }
