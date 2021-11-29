@@ -9,7 +9,9 @@
 
   "LocalPdfStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB_Pdfs",
 
-  "LocalReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\OverviewReport.csv",
+  "LocalMetaDataReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\MetaDataOverviewReport.csv",
+
+  "LocalPdfReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\PdfOverviewReport.csv",
 
   "UseLocalWobMetaData": true
 }

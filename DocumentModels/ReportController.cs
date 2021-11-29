@@ -2,80 +2,59 @@
 
 public class ReportController
 {
-  public static async Task WriteMetaDataReport(WobFileList wobFiles, string reportFile, HttpController httpControl)
+  public static void WriteMetaDataReport(
+    WobFileList wobFiles, string reportFile, LogController logControl)
   {
-    if (string.IsNullOrEmpty(reportFile))
-    {
-      // TODO prettify...
-      throw new Exception("missing path for report file...");
-    }
+    var operationName = "Writing MetaData Report";
+    logControl.StartOperation(operationName);
 
     var csv = new StringBuilder();
     csv.AppendLine(
       "WobFile, WobURL, WobTitle, WobDate," +
-      "PdfName, PdfUrl, PdfDate, Size, PdfTitle, PdfPages (meta), WordsPerPage"
+      "DocumentName, DocumentUrl, DocumentDate, DocumentSize"
     );
 
-    for (var index = 0; index < wobFiles.Count; index++)
+    foreach (var wobFile in wobFiles)
     {
-      var wobFile = wobFiles[index];
       if (wobFile.Documents == null)
       {
-        csv.AppendLine($"{wobFile.Id},{wobFile.Url},{wobFile.Title},{wobFile.Date},,,,,,,");
+        csv.AppendLine(
+          $"{wobFile.Id},{wobFile.Url},{wobFile.Title},{wobFile.Date},,,,");
       }
       else
       {
         foreach (var document in wobFile.Documents)
         {
-          using var pdf = await RetrievePdf(document, httpControl);
+          var title = CsvEncode(wobFile.Title);
+          var documentName = CsvEncode(document.Name);
 
-          // TODO desperately prettify...
-          if (pdf != null)
-          {
-            csv.AppendLine(
-              $"{wobFile.Id},{wobFile.Url},{wobFile.Title?.Replace(',', '.')},{wobFile.Date}," +
-              $"{document.Name?.Replace(',', '.')},{document.Url},{document.Date},{document.Size}," +
-              $"{pdf.Title?.Replace(',', '.')},{pdf.PageCount} ({document.MetaPageCount}),{pdf.AverageWordsPerPage}"
-            );
-          }
-          else
-          {
-            csv.AppendLine(
-              $"{wobFile.Id},{wobFile.Url},{wobFile.Title?.Replace(',', '.')},{wobFile.Date}," +
-              $"{document.Name?.Replace(',', '.')},{document.Url},{document.Date},{document.Size}," +
-              $"ERROR,0 ({document.MetaPageCount}),0"
-            );
-          }
+          csv.AppendLine(
+            $"{wobFile.Id},{wobFile.Url},{title},{wobFile.Date}," +
+            $"{documentName},{document.Url},{document.Date},{document.Size}"
+          );
         }
       }
-      Console.WriteLine($"[{index}] - {wobFile.Id} Passed");
+      logControl.IterationPassed(operationName, wobFile.Id);
     }
 
     File.WriteAllText(reportFile, csv.ToString());
+    logControl.FinishOperation(operationName);
   }
 
 
-  public static async Task<PdfDocumentClass> RetrievePdf(Document document, HttpController httpControl)
+  public static void WritePdfReport(string pdfLocation, string reportFile, LogController logControl)
   {
-    if (string.IsNullOrWhiteSpace(document.Url))
-    {
-      // TODO prettify...
-      throw new Exception($"missing Url : {document}");
-    }
+    var operationName = "Writing Pdf Report";
+    logControl.StartOperation(operationName);
 
-    try
-    {
-      using var stream = await httpControl.RetrievePdfStream(document.Url);
-      using var pdf = new PdfDocumentClass(stream);
+    // TODO : ...
 
-      return pdf;
-    }
-    // TODO prettify...
-    catch (Exception ex)
-    {
-      return null;
-    }
+    File.WriteAllText(reportFile, string.Empty);
+    logControl.FinishOperation(operationName);
   }
 
+
+  private static string CsvEncode(string? input)
+    => input?.Replace(",", ".") ?? string.Empty;
 }
 

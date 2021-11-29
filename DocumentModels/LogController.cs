@@ -5,6 +5,10 @@ public class LogController
   public LogController(string logFile)
   {
     LogFile = logFile;
+
+    Output(Environment.NewLine);
+    Output("---------------------------------");
+    Write("New Log Started");
   }
 
 
@@ -13,35 +17,21 @@ public class LogController
     TimedOperations[operationName] = new TimedOperation();
   }
 
-  public void IterationPassed(string operationName, string? message = null)
+  public void IterationPassed(string operationName, string? identifier = null)
   {
     TimedOperations[operationName].IterationPassed();
 
-    var output = $"{TimedOperations[operationName].Iteration} passed for operation `{operationName}`";
-    if (!string.IsNullOrWhiteSpace(message))
-    {
-      output += $": {message}";
-    }
-    Write(output);
+    Write($"{TimedOperations[operationName].Iteration} {identifier}" +
+      $" passed for operation `{operationName}`");
   }
 
   public void FinishOperation(string operationName)
   {
-    var operationTime = DateTime.Now - TimedOperations[operationName].StartTime;
+    var operationTime = TimedOperations[operationName].CompleteOperation();
     
     Write($"Operation `{operationName}` completed, took {operationTime}");
 
     TimedOperations.Remove(operationName);
-  }
-
-
-  public void Write(Exception exception, bool isBreaking = true)
-  {
-    Write(exception.Source ?? string.Empty, exception.Message);
-    if (isBreaking)
-    {
-      throw exception;
-    }
   }
 
 
@@ -63,6 +53,7 @@ public class LogController
     => $"{(!string.IsNullOrWhiteSpace(name) ? name : "Unknown")} : ";
 
   private static string Prefix => $"[{DateTime.Now}] - ";
+
 
 
   private readonly Dictionary<string, TimedOperation> TimedOperations = new();

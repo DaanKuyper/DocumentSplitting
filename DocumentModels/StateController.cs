@@ -22,11 +22,14 @@ public class StateController
 
   public async Task<WobFileList> RetrieveWobFiles()
   {
+    var operationName = "Retrieving WOB files";
+    LogControl.StartOperation(operationName);
+
     var result = new WobFileList();
 
     if (string.IsNullOrEmpty(Config.ApiUrl))
     {
-      LogControl.Write(new ConfigException("missing API url..."));
+      HandleException(new ConfigException("missing API url..."));
     }
 
     var jsonString = await HttpControl.RetrieveWobList();
@@ -34,11 +37,8 @@ public class StateController
 
     if (data == null || data.IsEmpty)
     {
-      LogControl.Write(new DataException("missing documents in apiresult..."));
+      HandleException(new DataException("missing documents in apiresult..."));
     }
-
-    var operationName = "Retrieving WOB files";
-    LogControl.StartOperation(operationName);
 
     foreach (var record in data.results)
     {
@@ -64,13 +64,13 @@ public class StateController
 
     if (string.IsNullOrEmpty(Config.LocalMetaStoragePath))
     {
-      LogControl.Write(new ConfigException("missing json path in configuration..."));
+      HandleException(new ConfigException("missing json path in configuration..."));
     }
 
     var fileNames = Directory.GetFiles(Config.LocalMetaStoragePath);
     if (fileNames.Length == 0)
     {
-      LogControl.Write(new DataException("missing wob files in local meta storage path..."));
+      HandleException(new DataException("missing wob files in local meta storage path..."));
     }
 
     foreach (var fileName in fileNames)
@@ -85,7 +85,7 @@ public class StateController
       // TODO prettify...
       catch (Exception ex)
       {
-        LogControl.Write(new DataException($"json issue encountered in `{fileName}`: {ex.Message}"), false);
+        HandleException(new DataException($"json issue encountered in `{fileName}`: {ex.Message}"), false);
       }
     }
     return result;
@@ -96,7 +96,7 @@ public class StateController
   {
     if (string.IsNullOrEmpty(Config.LocalMetaStoragePath))
     {
-      LogControl.Write(new ConfigException("missing json path in configuration..."));
+      HandleException(new ConfigException("missing json path in configuration..."));
     }
 
     foreach (var wobFile in WobFiles)
@@ -138,7 +138,7 @@ public class StateController
   {
     if (string.IsNullOrWhiteSpace(document.Url))
     {
-      LogControl.Write(new DataException($"missing Url in document : `{document}`"), false);
+      HandleException(new DataException($"missing Url in document : `{document}`"), false);
       return;
     }
 
@@ -154,14 +154,48 @@ public class StateController
     // TODO prettify...
     catch (Exception ex)
     {
-      LogControl.Write(new DataException(ex.Message), false);
+      HandleException(new DataException(ex.Message), false);
     }
   }
 
 
-  public async Task WriteMetaDataReport()
-    => await ReportController.WriteMetaDataReport(WobFiles, Config.LocalReportFile, HttpControl);
+  public void HandleException(Exception exception, bool isBreaking = true)
+  {
+    LogControl.Write(exception.Source ?? string.Empty, exception.Message);
+    if (isBreaking)
+    {
+      throw exception;
+    }
+  }
 
+
+  public void WriteMetaDataReport()
+  {
+    try
+    {
+      ReportController.WriteMetaDataReport(
+        WobFiles, Config.LocalMetaDataReportFile, LogControl);
+    }
+    catch (Exception ex)
+    {
+      HandleException(ex);
+    }
+  }
+
+
+  public void WritePdfDataReport()
+  {
+    try
+    {
+      // TODO : possibility to write report on remote Pdfs...
+      ReportController.WritePdfReport(
+        Config.LocalPdfStoragePath, Config.LocalMetaDataReportFile, LogControl);
+    }
+    catch (Exception ex)
+    {
+      HandleException(ex);
+    }
+  }
 
   public static string FilePath(string path, string fileName)
     => $"{path}{Path.DirectorySeparatorChar}{fileName}";
