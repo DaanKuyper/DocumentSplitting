@@ -26,9 +26,15 @@ public class Configuration
 
   public string ApiUrl { get; set; } = string.Empty;
 
-  public bool RetrieveOnStart { get; set; } = false;
 
-  public string LocalStoragePath { get; set; } = string.Empty;
+  public string LocalMetaStoragePath { get; set; } = string.Empty;
+
+  public string LocalPdfStoragePath { get; set; } = string.Empty;
 
   public string LocalReportFile { get; set; } = string.Empty;
+
+  public string OutputLogFile { get; set; } = string.Empty;
+
+
+  public bool UseLocalWobMetaData { get; set; } = false;
 }

@@ -1,6 +1,6 @@
 ﻿namespace PdfModels;
 
-public class PdfDocumentClass
+public class PdfDocumentClass : IDisposable
 {
   public PdfDocumentClass(Stream stream)
   {
@@ -9,13 +9,6 @@ public class PdfDocumentClass
 
     ParsePages();
   }
-
-  public PdfDocumentClass(Stream stream, string url, HttpStatusCode statusCode) : this(stream)
-  {
-    Url = url;
-    HttpStatus = statusCode;
-  }
-
 
   void ParsePages()
   {
@@ -57,12 +50,9 @@ public class PdfDocumentClass
   public List<PdfPageClass> Pages { get; set; } = new();
 
 
-  public string? Url { get; }
-
-  public HttpStatusCode HttpStatus { get; }
-
-
   readonly PdfDocument document;
 
   readonly PdfDocumentInfo documentInfo;
+
+  public void Dispose() => document.Close();
 }

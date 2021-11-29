@@ -11,5 +11,7 @@ public class WobFileList : List<WobFile>
     }
     Add(wobFile);
   }
+
+  public bool IsEmpty => Count == 0;
 }
 

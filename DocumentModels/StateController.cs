@@ -6,17 +6,17 @@ public class StateController
   {
     Config = Configuration.Load(configFile);
 
+    LogControl = new LogController(Config.OutputLogFile);
     HttpControl = new HttpController(Config.BaseUrl, Config.ApiUrl);
 
-    if (Config.RetrieveOnStart)
-    {
-      WobFiles = Task.Run(RetrieveWobFiles).Result;
-      WriteJsonWobFiles();
-    }
-    else
-    {
-      WobFiles = ReadJsonWobFiles();
-    }
+    LogControl.Write("Successfully initialized...");
+  }
+
+
+  public async Task RetrieveMeta()
+  {
+    WobFiles = await RetrieveWobFiles();
+    WriteJsonWobFiles();
   }
 
 
@@ -26,50 +26,34 @@ public class StateController
 
     if (string.IsNullOrEmpty(Config.ApiUrl))
     {
-      // TODO prettify...
-      throw new Exception("missing API url in configuration...");
+      LogControl.Write(new ConfigException("missing API url..."));
     }
 
     var jsonString = await HttpControl.RetrieveWobList();
     var data = JsonSerializer.Deserialize<ApiResultDataList>(jsonString);
 
-    // TODO prettify...
-    if (data == null)
+    if (data == null || data.IsEmpty)
     {
-      throw new Exception();
+      LogControl.Write(new DataException("missing documents in apiresult..."));
     }
 
-    // TODO prettify...
-    if (data.results == null || data.results.Count == 0)
-    {
-      throw new Exception();
-    }
+    var operationName = "Retrieving WOB files";
+    LogControl.StartOperation(operationName);
 
     foreach (var record in data.results)
     {
+      LogControl.IterationPassed(operationName);
+
       var url = HttpControl.WobDocumentUrl(record.Id);
+      var htmlString = await HttpControl.RetrieveWobDocument(url);
 
-      result.Add(new WobFile(record, await RetrieveDocuments(url), url));
+      var documents = new DocumentList(url, htmlString);
+      var wobFile = new WobFile(record, documents, url);
+
+      result.Add(wobFile);
     }
 
-    return result;
-  }
-
-  public async Task<List<Document>> RetrieveDocuments(string url)
-  {
-    var result = new List<Document>();
-
-    var htmlString = await HttpControl.RetrieveWobDocument(url);
-
-    // TODO prettify...
-    var regex = new Regex("<a class=\"publication__download\" (.*?)/a>");
-    var matches = regex.Matches(htmlString);
-
-    foreach (Match match in matches)
-    {
-      result.Add(new Document(url, match.Value));
-    }
-
+    LogControl.FinishOperation(operationName);
     return result;
   }
 
@@ -78,17 +62,15 @@ public class StateController
   {
     var result = new WobFileList();
 
-    if (string.IsNullOrEmpty(Config.LocalStoragePath))
+    if (string.IsNullOrEmpty(Config.LocalMetaStoragePath))
     {
-      // TODO prettify...
-      throw new Exception("missing json path in configuration...");
+      LogControl.Write(new ConfigException("missing json path in configuration..."));
     }
 
-    var fileNames = Directory.GetFiles(Config.LocalStoragePath);
+    var fileNames = Directory.GetFiles(Config.LocalMetaStoragePath);
     if (fileNames.Length == 0)
     {
-      // TODO prettify...
-      throw new Exception("missing wob files...");
+      LogControl.Write(new DataException("missing wob files in local meta storage path..."));
     }
 
     foreach (var fileName in fileNames)
@@ -101,9 +83,9 @@ public class StateController
         result.AddFile(wobFile);
       }
       // TODO prettify...
-      catch (Exception)
+      catch (Exception ex)
       {
-        throw new Exception($"Json issue encountered: `{fileName}`");
+        LogControl.Write(new DataException($"json issue encountered in `{fileName}`: {ex.Message}"), false);
       }
     }
     return result;
@@ -112,100 +94,85 @@ public class StateController
 
   public void WriteJsonWobFiles()
   {
-    if (string.IsNullOrEmpty(Config.LocalStoragePath))
+    if (string.IsNullOrEmpty(Config.LocalMetaStoragePath))
     {
-      // TODO prettify...
-      throw new Exception("missing json path in configuration...");
+      LogControl.Write(new ConfigException("missing json path in configuration..."));
     }
 
     foreach (var wobFile in WobFiles)
     {
       var jsonString = JsonSerializer.Serialize(wobFile);
-      var path = $"{Config.LocalStoragePath}{Path.DirectorySeparatorChar}{wobFile.FileName}";
+      var filePath = FilePath(Config.LocalMetaStoragePath, wobFile.FileName);
 
-      File.WriteAllText(path, jsonString);
+      File.WriteAllText(filePath, jsonString);
     }
   }
 
 
-  public async Task WriteReportCsv()
+  public async Task RetrievePdfs()
   {
-    if (string.IsNullOrEmpty(Config.LocalReportFile))
+    if (WobFiles.IsEmpty)
     {
-      // TODO prettify...
-      throw new Exception("missing json path in configuration...");
+      WobFiles = Config.UseLocalWobMetaData ?
+        ReadJsonWobFiles() : await RetrieveWobFiles();
     }
 
-    var csv = new StringBuilder();
-    csv.AppendLine(
-      "WobFile, WobURL, WobTitle, WobDate," +
-      "PdfName, PdfUrl, PdfDate, Size, PdfTitle, PdfPages (meta), WordsPerPage"
-    );
+    var operationName = "Retrieving PDFs";
+    LogControl.StartOperation(operationName);
 
-    for (var index = 0; index < WobFiles.Count; index++)
+    foreach (var wobFile in WobFiles)
     {
-      var wobFile = WobFiles[index];
-      if (wobFile.Documents == null)
+      foreach (var document in wobFile.Documents)
       {
-        csv.AppendLine($"{wobFile.Id},{wobFile.Url},{wobFile.Title},{wobFile.Date},,,,,,,");
-      }
-      else
-      {
-        foreach (var document in wobFile.Documents)
-        {
-          var pdf = await ParsePdf(document);
+        LogControl.IterationPassed(operationName);
 
-          // TODO desperately prettify...
-          if (pdf != null)
-          {
-            csv.AppendLine(
-              $"{wobFile.Id},{wobFile.Url},{wobFile.Title?.Replace(',', '.')},{wobFile.Date}," +
-              $"{document.Name?.Replace(',', '.')},{document.Url},{document.Date},{document.Size}," +
-              $"{pdf.Title?.Replace(',', '.')},{pdf.PageCount} ({document.MetaPageCount}),{pdf.AverageWordsPerPage}"
-            );
-          }
-          else
-          {
-            csv.AppendLine(
-              $"{wobFile.Id},{wobFile.Url},{wobFile.Title?.Replace(',', '.')},{wobFile.Date}," +
-              $"{document.Name?.Replace(',', '.')},{document.Url},{document.Date},{document.Size}," +
-              $"ERROR,0 ({document.MetaPageCount}),0"
-            );
-          }
-        }
+        await RetrievePdf(document, wobFile.DocumentFileName(document));
       }
-      Console.WriteLine($"[{index}] - {wobFile.Id} Passed");
     }
 
-    File.WriteAllText(Config.LocalReportFile, csv.ToString());
+    LogControl.FinishOperation(operationName);
   }
 
 
-  public async Task<PdfDocumentClass> ParsePdf(Document document)
+  public async Task RetrievePdf(Document document, string documentName)
   {
     if (string.IsNullOrWhiteSpace(document.Url))
     {
-      // TODO prettify...
-      throw new Exception($"missing Url : {document}");
+      LogControl.Write(new DataException($"missing Url in document : `{document}`"), false);
+      return;
     }
 
     try
     {
-      return await HttpControl.RetrievePdf(document.Url);
+      var filePath = FilePath(Config.LocalPdfStoragePath, documentName);
+
+      using var pdfStream = await HttpControl.RetrievePdfStream(document.Url);
+      using var fileStream = File.Create(filePath);
+
+      pdfStream.CopyTo(fileStream);
     }
     // TODO prettify...
     catch (Exception ex)
     {
-      return null;
+      LogControl.Write(new DataException(ex.Message), false);
     }
   }
 
 
+  public async Task WriteMetaDataReport()
+    => await ReportController.WriteMetaDataReport(WobFiles, Config.LocalReportFile, HttpControl);
 
-  public WobFileList WobFiles { get; set; }
+
+  public static string FilePath(string path, string fileName)
+    => $"{path}{Path.DirectorySeparatorChar}{fileName}";
+
+
+  public WobFileList WobFiles { get; set; } = new();
 
 
   readonly Configuration Config;
+
+  readonly LogController LogControl;
 
   readonly HttpController HttpControl;
 }

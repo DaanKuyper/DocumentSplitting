@@ -3,9 +3,13 @@
 
   "ApiUrl": "https://do-ams3-17.hw.webhare.net/services/wobcovid19-prod-1/search/?count=200&orderby=publicationdate",
 
-  "LocalStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB",
+  "OutputLogFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\log.txt",
+
+  "LocalMetaStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB_MetaData",
+
+  "LocalPdfStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB_Pdfs",
 
   "LocalReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\OverviewReport.csv",
 
-  "RetrieveOnStart": true
+  "UseLocalWobMetaData": true
 }

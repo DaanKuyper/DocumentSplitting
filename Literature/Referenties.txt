@@ -1,4 +1,9 @@
-﻿http://code.google.com/p/tesseract-ocr/
+﻿
+ - Splitting Documents based on Fonts, WhiteSpace, Header & Footer association
+Liangcai Gao, Zhi Tang, "A mixed approach to book splitting," Proc. SPIE 6815, Document Recognition and Retrieval XV, 68150B (28 January 2008); https://doi.org/10.1117/12.765813
+
+
+http://code.google.com/p/tesseract-ocr/
 
 PDF Explained...
 https://www.syncfusion.com/succinctly-free-ebooks/pdf/text-operators
@@ -35,6 +40,7 @@ ISSN = {2073-8994},
 ABSTRACT = {Optical Character Recognition (OCR) is the process of identifying and converting texts rendered in images using pixels to a more computer-friendly representation. The presented work aims to prove that the accuracy of the Tesseract 4.0 OCR engine can be further enhanced by employing convolution-based preprocessing using specific kernels. As Tesseract 4.0 has proven great performance when evaluated against a favorable input, its capability of properly detecting and identifying characters in more realistic, unfriendly images is questioned. The article proposes an adaptive image preprocessing step guided by a reinforcement learning model, which attempts to minimize the edit distance between the recognized text and the ground truth. It is shown that this approach can boost the character-level accuracy of Tesseract 4.0 from 0.134 to 0.616 (+359% relative change) and the F1 score from 0.163 to 0.729 (+347% relative change) on a dataset that is considered challenging by its authors.},
 DOI = {10.3390/sym12050715}
 }
+
 
 - PERFORMANCE TESTS OF TESSERACT & OTHER -
 @article{hegghammer2021ocr,
