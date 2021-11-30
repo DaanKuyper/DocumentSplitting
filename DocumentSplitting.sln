@@ -157,6 +157,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WobModels", "WobModels\WobM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcrModels", "OcrModels\OcrModels.csproj", "{2CFE4A63-ED83-4858-80B9-0D9718B845A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfModels.iText", "PdfModels.iText\PdfModels.iText.csproj", "{EEC3EDD1-7157-420E-B78A-03449C033A00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +189,10 @@ Global
 		{2CFE4A63-ED83-4858-80B9-0D9718B845A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CFE4A63-ED83-4858-80B9-0D9718B845A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CFE4A63-ED83-4858-80B9-0D9718B845A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEC3EDD1-7157-420E-B78A-03449C033A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEC3EDD1-7157-420E-B78A-03449C033A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEC3EDD1-7157-420E-B78A-03449C033A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEC3EDD1-7157-420E-B78A-03449C033A00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

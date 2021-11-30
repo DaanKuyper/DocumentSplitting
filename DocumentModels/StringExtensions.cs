@@ -1,16 +1,12 @@
-﻿using System;
-
-namespace SplittingComponents;
+﻿namespace SplittingComponents;
 
 public class StringExtensions
 {
-  public static string Truncate(string value, int maxLength, string suffix = "…")
+  public static string Truncate(
+    string value, int maxLength, string suffix = "")
   {
-    if (value.Length <= maxLength)
-    {
-      return value;
-    }
-    return string.Concat(value.AsSpan(0, maxLength - suffix.Length), suffix);
+    return value.Length <= maxLength ? value : 
+      string.Concat(value.AsSpan(0, maxLength - suffix.Length), suffix);
   }
 
   public static string FilePath(string path, string fileName)

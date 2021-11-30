@@ -1,8 +1,6 @@
-﻿global using System.Net;
-global using System.Text;
+﻿global using System.Text;
 
-global using iText.Kernel.Pdf;
-global using iText.Kernel.Pdf.Canvas.Parser;
-global using iText.Kernel.Pdf.Canvas.Parser.Listener;
-
-
+global using PdfSharpCore.Pdf;
+global using PdfSharpCore.Pdf.IO;
+global using PdfSharpCore.Pdf.Content;
+global using PdfSharpCore.Pdf.Content.Objects;

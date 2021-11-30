@@ -4,10 +4,11 @@ namespace OcrModels;
 
 public class OcrClass : IDisposable
 {
-  public OcrClass(string language)
+  public OcrClass()
   {
-    Engine = new TesseractEngine(TessDataPath, language);
+    Engine = new TesseractEngine(TessDataPath, "nld");
   }
+    
 
   public (string, float) ProcessImage(byte[] imageBytes)
   {
@@ -16,6 +17,7 @@ public class OcrClass : IDisposable
 
     return (page.GetText(), page.GetMeanConfidence());
   }
+
 
 
   private readonly TesseractEngine Engine;

@@ -188,8 +188,8 @@ public class StateController
     try
     {
       // TODO : possibility to write report on remote Pdfs...
-      ReportController.WritePdfReport(
-        Config.LocalPdfStoragePath, Config.LocalMetaDataReportFile, LogControl);
+      ReportController.WritePdfOverviewReport(
+        Config.LocalPdfStoragePath, Config.LocalPdfReportFile, LogControl);
     }
     catch (Exception ex)
     {
