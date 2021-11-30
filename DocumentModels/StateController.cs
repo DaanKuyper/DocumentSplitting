@@ -102,7 +102,7 @@ public class StateController
     foreach (var wobFile in WobFiles)
     {
       var jsonString = JsonSerializer.Serialize(wobFile);
-      var filePath = FilePath(Config.LocalMetaStoragePath, wobFile.FileName);
+      var filePath = StringExtensions.FilePath(Config.LocalMetaStoragePath, wobFile.FileName);
 
       File.WriteAllText(filePath, jsonString);
     }
@@ -144,7 +144,7 @@ public class StateController
 
     try
     {
-      var filePath = FilePath(Config.LocalPdfStoragePath, documentName);
+      var filePath = StringExtensions.FilePath(Config.LocalPdfStoragePath, documentName);
 
       using var pdfStream = await HttpControl.RetrievePdfStream(document.Url);
       using var fileStream = File.Create(filePath);
@@ -196,9 +196,6 @@ public class StateController
       HandleException(ex);
     }
   }
-
-  public static string FilePath(string path, string fileName)
-    => $"{path}{Path.DirectorySeparatorChar}{fileName}";
 
 
   public WobFileList WobFiles { get; set; } = new();

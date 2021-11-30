@@ -15,6 +15,7 @@ public class LogController
   public void StartOperation(string operationName)
   {
     TimedOperations[operationName] = new TimedOperation();
+    Write($"Started new Operation: `{operationName}`");
   }
 
   public void IterationPassed(string operationName, string? identifier = null)

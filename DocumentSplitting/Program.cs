@@ -6,7 +6,7 @@ string configFile = $"{Environment.CurrentDirectory}{Path.DirectorySeparatorChar
 
 var state = new StateController(configFile);
 
-//await state.RetrieveMeta();
+await state.RetrieveMeta();
 
 await state.RetrievePdfs();
 

@@ -25,8 +25,8 @@ public class ReportController
       {
         foreach (var document in wobFile.Documents)
         {
-          var title = CsvEncode(wobFile.Title);
-          var documentName = CsvEncode(document.Name);
+          var title = StringExtensions.CsvEncode(wobFile.Title);
+          var documentName = StringExtensions.CsvEncode(document.Name);
 
           csv.AppendLine(
             $"{wobFile.Id},{wobFile.Url},{title},{wobFile.Date}," +
@@ -52,9 +52,5 @@ public class ReportController
     File.WriteAllText(reportFile, string.Empty);
     logControl.FinishOperation(operationName);
   }
-
-
-  private static string CsvEncode(string? input)
-    => input?.Replace(",", ".") ?? string.Empty;
 }
 

@@ -33,6 +33,9 @@ public class PdfDocumentClass : IDisposable
   }
 
 
+
+
+
   public float AverageWordsPerPage => Pages.Sum(page => page.WordCount) / PageCount;
 
   public int PageCount => Pages.Count;
