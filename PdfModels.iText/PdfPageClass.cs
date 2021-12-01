@@ -1,4 +1,6 @@
-﻿namespace PdfModels.iText;
+﻿using iText.Layout.Element;
+
+namespace PdfModels.iText;
 
 public class PdfPageClass
 {
