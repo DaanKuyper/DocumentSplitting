@@ -367,4 +367,11 @@ WOB_Pdfs/*
 
 # Do include PDF folder
 !WOB_Pdfs/.gitkeep
+
+# Html files ignored to save storgae..
+WOB_Htmls/*
+
+# Do include PDF folder
+!WOB_Htmls/.gitkeep
 /Xpdf
+

@@ -11,6 +11,8 @@
 
   "LocalHtmlStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB_Htmls",
 
+  "LocalOcrStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB_OCR",
+
   "LocalMetaDataReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\MetaDataOverviewReport.csv",
 
   "LocalPdfReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\PdfOverviewReport.csv",

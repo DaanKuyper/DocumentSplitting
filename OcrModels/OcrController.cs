@@ -1,21 +1,19 @@
-﻿using Tesseract;
+﻿namespace OcrModels;
 
-namespace OcrModels;
-
-public class OcrClass : IDisposable
+public class OcrController : IDisposable
 {
-  public OcrClass()
+  public OcrController()
   {
     Engine = new TesseractEngine(TessDataPath, "nld");
   }
     
 
-  public (string, float) ProcessImage(byte[] imageBytes)
+  public OcrResult ProcessImage(byte[] imageBytes)
   {
     using var image = Pix.LoadFromMemory(imageBytes);
     using var page = Engine.Process(image);
 
-    return (page.GetText(), page.GetMeanConfidence());
+    return new OcrResult(page);
   }
 
 

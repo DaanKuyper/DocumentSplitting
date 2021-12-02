@@ -2,12 +2,24 @@
 
 public class XPdfController
 {
-  public static void PdfToHtml(string filePath, string folderPath, 
-    string folderName, LogController logControl)
+  // TODO : support Linux & MacOS for xpdf commands...
+
+  public static void PdfToHtml(string filePath, string folderPath,
+    string folderName, bool overwriteExisting, LogController logControl)
   {
-    // TODO : support Linux & MacOS for PdfToHtml xpdf command...
     var path = $"{folderPath}{Path.DirectorySeparatorChar}{folderName}";
-    DeleteExistingPath(path, logControl);    
+
+    if (Directory.Exists(path))
+    {
+      if (!overwriteExisting)
+      {
+        logControl.Write($"Path existed `{path}` - skipping...");
+        return;
+      }
+
+      logControl.Write($"Path existed `{path}` - overwriting...");
+      Directory.Delete(path, true);
+    }
 
     var process = new Process();
     process.StartInfo.FileName = $"xpdf{Path.DirectorySeparatorChar}pdftohtml";
@@ -19,19 +31,28 @@ public class XPdfController
     process.Start();
 
     logControl.Write(process.StandardOutput.ReadToEnd());
-    logControl.WriteError(process.StandardError.ReadToEnd());
+    logControl.WriteError(process.StandardError.ReadToEnd(), folderName);
 
     process.WaitForExit();
   }
 
 
-  static void DeleteExistingPath(string path, LogController logControl)
+  public static void PdfToText(string filePath, string resultPath,
+    LogController logControl)
   {
-    if (Directory.Exists(path))
-    {
-      logControl.Write($"Path existed `{path}` - overwriting...");
-      Directory.Delete(path, true);
-    }
+    var process = new Process();
+    process.StartInfo.FileName = $"xpdf{Path.DirectorySeparatorChar}pdftotext";
+    process.StartInfo.Arguments = $"{filePath} {resultPath}";
+
+    process.StartInfo.RedirectStandardOutput = true;
+    process.StartInfo.RedirectStandardError = true;
+
+    process.Start();
+
+    logControl.Write(process.StandardOutput.ReadToEnd());
+    logControl.WriteError(process.StandardError.ReadToEnd(), filePath);
+
+    process.WaitForExit();
   }
 
 

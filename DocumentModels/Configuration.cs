@@ -33,9 +33,14 @@ public class Configuration
 
   public string LocalHtmlStoragePath { get; set; } = string.Empty;
 
+  public string LocalOcrStoragePath { get; set; } = string.Empty;
+
+
   public string LocalMetaDataReportFile { get; set; } = string.Empty;
 
   public string LocalPdfReportFile { get; set; } = string.Empty;
+
+  public string LocalOcrReportFile { get; set; } = string.Empty;
 
 
   public string OutputLogFile { get; set; } = string.Empty;

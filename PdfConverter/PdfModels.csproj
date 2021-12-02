@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -10,6 +10,7 @@
     <None Remove="pdftohtml.exe" />
     <None Remove="xpdf\d050000l.pfb" />
     <None Remove="xpdf\pdfinfo.exe" />
+    <None Remove="xpdf\pdftotext.exe" />
     <None Remove="xpdf\s050000l.pfb" />
     <None Remove="xpdf\xpdfrc" />
   </ItemGroup>
@@ -22,6 +23,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="xpdf\pdftohtml.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xpdf\pdftotext.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="xpdf\s050000l.pfb">

@@ -8,13 +8,15 @@ var state = new StateController(configFile);
 
 //await state.RetrieveMeta();
 
-await state.RetrievePdfs();
+//await state.RetrievePdfs();
 
 //state.WriteMetaDataReport();
 
-state.WritePdfDataReport();
+//state.WritePdfDataReport();
 
-//state.ConvertPdfsToHtml();
+//state.ConvertPdfsToHtml(false);
+
+state.WriteOcrReport();
 
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");

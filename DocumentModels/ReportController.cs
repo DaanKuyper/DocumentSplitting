@@ -55,17 +55,12 @@ public class ReportController
     var filePaths = Directory.GetFiles(localPdfStoragePath, "*.pdf");
     if (filePaths.Length == 0)
     {
-      throw new DataException("missing files in local meta storage path...");
+      throw new DataException("missing files in local pdf storage path...");
     }
 
-    //TODO !!!
-    //var properties = typeof(PdfDocumentInfo).GetProperties();
     var properties = typeof(PdfDocumentInfo).GetProperties();
-
     var csv = new StringBuilder();
-
     csv.Append("FileName,");
-    csv.AppendLine(CsvHeader(properties));
 
     foreach (var filePath in filePaths)
     {
@@ -90,42 +85,61 @@ public class ReportController
   }
 
 
-  //public static void WritePdfReport(
-  //  string pdfFile, string reportFile, LogController logControl)
-  //{
-  //  var operationName = "Writing Pdf Report";
-  //  logControl.StartOperation(operationName);
+  public static void WriteOcrReport(string localPdfStoragePath, 
+    string localHtmlStoragePath, string localOcrStoragePath, 
+    string reportFile, LogController logControl)
+  {
+    var operationName = "Writing OCR Report";
+    logControl.StartOperation(operationName);
 
+    var pdfFilePaths = Directory.GetFiles(localPdfStoragePath, "*.pdf");
+    if (pdfFilePaths.Length == 0)
+    {
+      throw new DataException("missing files in local pdf storage path...");
+    }
 
-  //  var pdfProps = typeof(PdfDocumentClass).GetProperties();
-  //  var ocrProps = typeof(OcrClass).GetProperties();
+    var htmlDirectories = Directory.GetDirectories(localHtmlStoragePath);
+    if (htmlDirectories.Length == 0)
+    {
+      throw new DataException("missing html directories in local html storage path...");
+    }
 
-  //  var csv = new StringBuilder();
-  //  csv.AppendLine($"{CsvHeader(pdfProps)},{CsvHeader(ocrProps)}");
+    using var ocrControl = new OcrController();
 
-  //  try
-  //  {
-  //    using var pdf = new PdfDocumentClass(File.OpenRead(pdfFile));
-  //    using var ocr = new OcrClass();
+    var csv = new StringBuilder();
+    csv.Append("FileName,Pages,WordCount,WordsPerPage,WordCountOcr," +
+      "WordPerPageOcr,AverageOcrConfidence");
 
-  //    csv.Append(CsvValues(pdfProps, pdf));
+    foreach (var filePath in pdfFilePaths)
+    {
+      try
+      {
+        var fileName = Path.GetFileNameWithoutExtension(filePath);
 
+        // TODO : this probably shouldn't happen here...
+        var path = $"{localOcrStoragePath}{Path.DirectorySeparatorChar}{fileName}";
+        if (!Directory.Exists(path))
+        {
+          Directory.CreateDirectory(path);
+        }
+        var resultPath = $"{path}{Path.DirectorySeparatorChar}{fileName}.txt";
 
-  //    for (var i = 0; i < ocrProps.Length; i++)
-  //    {
+        //XPdfController.PdfToText(filePath, resultPath, logControl);
 
-  //    }
+        //    csv.Append($"{fileName},");
+        //    csv.AppendLine(CsvValues(properties, pdfInfo));
 
-  //  }
-  //  catch (Exception ex)
-  //  {
-  //    logControl.WriteError(ex.Message, filePath);
-  //  }
+        //    logControl.IterationPassed(operationName, fileName);
+      }
+      catch (Exception ex)
+      {
+        logControl.WriteError(ex.Message, filePath);
+      }
+    }
 
-
-  //  File.WriteAllText(reportFile, csv.ToString());
-  //  logControl.FinishOperation(operationName);
-  //}
+    File.WriteAllText(reportFile, csv.ToString());
+    logControl.FinishOperation(operationName);
+  }
 
 
   private static string CsvHeader(PropertyInfo[] properties)

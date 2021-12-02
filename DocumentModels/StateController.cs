@@ -163,7 +163,7 @@ public class StateController
   }
 
 
-  public void ConvertPdfsToHtml()
+  public void ConvertPdfsToHtml(bool overwriteExisting)
   {
     var operationName = "Converting Pdfs to Html";
     LogControl.StartOperation(operationName);
@@ -176,34 +176,27 @@ public class StateController
 
     foreach (var filePath in filePaths)
     {
-      ConvertPdfToHtml(filePath);
-      LogControl.IterationPassed(operationName);
+      var fileName = Path.GetFileNameWithoutExtension(filePath);
+
+      ConvertPdfToHtml(filePath, fileName, overwriteExisting);
+      LogControl.IterationPassed(operationName, fileName);
     }
 
     LogControl.FinishOperation(operationName);
   }
 
 
-  public void ConvertPdfToHtml(string filePath)
+  public void ConvertPdfToHtml(
+    string filePath, string fileName, bool overwriteExisting)
   {
     try
     {
-      var fileName = Path.GetFileNameWithoutExtension(filePath);
-      XPdfController.PdfToHtml(filePath, Config.LocalHtmlStoragePath, fileName, LogControl);
+      XPdfController.PdfToHtml(
+        filePath, Config.LocalHtmlStoragePath, fileName, overwriteExisting, LogControl);
     }
     catch(Exception ex)
     {
-
-    }
-  }
-
-
-  public void HandleException(Exception exception, bool isBreaking = true)
-  {
-    LogControl.Write(exception.Source ?? string.Empty, exception.Message);
-    if (isBreaking)
-    {
-      throw exception;
+      HandleException(ex);
     }
   }
 
@@ -233,6 +226,32 @@ public class StateController
     catch (Exception ex)
     {
       HandleException(ex);
+    }
+  }
+
+
+  public void WriteOcrReport()
+  {
+    try
+    {
+      // TODO : possibility to write report on remote Pdfs...
+      ReportController.WriteOcrReport(
+        Config.LocalPdfStoragePath, Config.LocalHtmlStoragePath, 
+        Config.LocalOcrStoragePath,Config.LocalOcrReportFile, LogControl);
+    }
+    catch (Exception ex)
+    {
+      HandleException(ex);
+    }
+  }
+
+
+  public void HandleException(Exception exception, bool isBreaking = true)
+  {
+    LogControl.Write(exception.Source ?? string.Empty, exception.Message);
+    if (isBreaking)
+    {
+      throw exception;
     }
   }
 

@@ -56,13 +56,12 @@ public class LogController
         $"Exception encountered for : `{identifier}`" : 
         $"Exception encountered:");
 
-      Output($" -> Exception message: `{message}`");
+      Output($" -> Exception message: {message}");
     }
   }
 
   private void Output(string logOutput)
   {
-
     File.AppendAllText(LogFile, LogFileOutput(logOutput));
     Console.WriteLine(logOutput);
   }
