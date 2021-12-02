@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="pdftohtml.exe" />
+    <None Remove="xpdf\d050000l.pfb" />
+    <None Remove="xpdf\pdfinfo.exe" />
+    <None Remove="xpdf\s050000l.pfb" />
+    <None Remove="xpdf\xpdfrc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xpdf\d050000l.pfb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xpdf\pdfinfo.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xpdf\pdftohtml.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xpdf\s050000l.pfb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xpdf\xpdfrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LoggingModels\LoggingModels.csproj" />
+  </ItemGroup>
+
+</Project>

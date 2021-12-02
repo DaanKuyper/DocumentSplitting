@@ -1,4 +1,4 @@
-﻿namespace PdfModels;
+﻿namespace PdfModels.PdfSharp;
 
 public class PdfPageClass
 {

@@ -1,4 +1,4 @@
-﻿namespace SplittingComponents;
+﻿namespace LoggingModels;
 
 public class LogController
 {
@@ -20,16 +20,16 @@ public class LogController
 
   public void IterationPassed(string operationName, string? identifier = null)
   {
-    TimedOperations[operationName].IterationPassed();
+    var iterationTime = TimedOperations[operationName].CompleteIteration();
 
     Write($"{TimedOperations[operationName].Iteration} {identifier}" +
-      $" passed for operation `{operationName}`");
+      $" passed for operation `{operationName}`, took {iterationTime}");
   }
 
   public void FinishOperation(string operationName)
   {
     var operationTime = TimedOperations[operationName].CompleteOperation();
-    
+
     Write($"Operation `{operationName}` completed, took {operationTime}");
 
     TimedOperations.Remove(operationName);
@@ -40,20 +40,41 @@ public class LogController
     => Write($"{FunctionPrefix(function)}{message}");
 
 
-  public void Write(string message) => Output($"{Prefix}{message}");
+  public void Write(string message)
+  {
+    if (!string.IsNullOrWhiteSpace(message))
+    {
+      Output(message);
+    }
+  }
 
+  public void WriteError(string message, string? identifier = null)
+  {
+    if (!string.IsNullOrWhiteSpace(message))
+    {
+      Output(!string.IsNullOrWhiteSpace(identifier) ?
+        $"Exception encountered for : `{identifier}`" : 
+        $"Exception encountered:");
+
+      Output($" -> Exception message: `{message}`");
+    }
+  }
 
   private void Output(string logOutput)
   {
+
+    File.AppendAllText(LogFile, LogFileOutput(logOutput));
     Console.WriteLine(logOutput);
-    File.AppendAllText(LogFile, logOutput + Environment.NewLine);
   }
 
 
   private static string FunctionPrefix(string name)
     => $"{(!string.IsNullOrWhiteSpace(name) ? name : "Unknown")} : ";
 
-  private static string Prefix => $"[{DateTime.Now}] - ";
+  private static string DatePrefix => $"[{DateTime.Now}] - ";
+
+  private static string LogFileOutput(string logOutput)
+    => $"{DatePrefix}{logOutput}{Environment.NewLine}";
 
 
 

@@ -20,6 +20,6 @@ public class StringExtensions
   }
 
   public static string CsvEncode(string? input)
-    => input?.Replace(",", ".") ?? string.Empty;
+    => input?.Replace(',', '.').Replace(Environment.NewLine, " | ") ?? string.Empty;
 }
 

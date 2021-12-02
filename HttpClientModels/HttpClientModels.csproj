@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PdfModels\PdfModels.csproj" />
+    <ProjectReference Include="..\PdfModels\PdfModels.PdfSharp.csproj" />
   </ItemGroup>
 
 </Project>

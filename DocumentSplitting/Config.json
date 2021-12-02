@@ -9,6 +9,8 @@
 
   "LocalPdfStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB_Pdfs",
 
+  "LocalHtmlStoragePath": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\WOB_Htmls",
+
   "LocalMetaDataReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\MetaDataOverviewReport.csv",
 
   "LocalPdfReportFile": "C:\\Users\\daan_\\source\\repos\\DocumentSplitting\\PdfOverviewReport.csv",
