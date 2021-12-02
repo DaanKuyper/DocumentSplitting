@@ -24,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplittingComponents", "Docu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DocumentSplitting", "DocumentSplitting\DocumentSplitting.csproj", "{8D736F33-F28B-4297-856E-4F5787B74C0E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfModels", "PdfModels\PdfModels.csproj", "{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfModels.PdfSharp", "PdfModels\PdfModels.PdfSharp.csproj", "{6C4A24AC-A256-47A4-9DB8-892E4D4F8000}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpClientModels", "HttpClientModels\HttpClientModels.csproj", "{B2FCC23A-EBE6-4D5A-8B15-AE9EDD8984EA}"
 EndProject
@@ -155,9 +155,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WOB_Pdfs", "WOB_Pdfs", "{AA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WobModels", "WobModels\WobModels.csproj", "{0E8EE39A-65FC-437C-942E-1AF1A88AE555}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcrModels", "OcrModels\OcrModels.csproj", "{2CFE4A63-ED83-4858-80B9-0D9718B845A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcrModels", "OcrModels\OcrModels.csproj", "{2CFE4A63-ED83-4858-80B9-0D9718B845A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfModels.iText", "PdfModels.iText\PdfModels.iText.csproj", "{EEC3EDD1-7157-420E-B78A-03449C033A00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfModels.iText", "PdfModels.iText\PdfModels.iText.csproj", "{EEC3EDD1-7157-420E-B78A-03449C033A00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfModels", "PdfConverter\PdfModels.csproj", "{D37A3582-459E-4C3C-BECB-F95875F5FFF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingModels", "LoggingModels\LoggingModels.csproj", "{1DE7ACF0-E219-4FFA-AA32-736B9DEF5809}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -193,6 +197,14 @@ Global
 		{EEC3EDD1-7157-420E-B78A-03449C033A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEC3EDD1-7157-420E-B78A-03449C033A00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEC3EDD1-7157-420E-B78A-03449C033A00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D37A3582-459E-4C3C-BECB-F95875F5FFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37A3582-459E-4C3C-BECB-F95875F5FFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37A3582-459E-4C3C-BECB-F95875F5FFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37A3582-459E-4C3C-BECB-F95875F5FFF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DE7ACF0-E219-4FFA-AA32-736B9DEF5809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DE7ACF0-E219-4FFA-AA32-736B9DEF5809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DE7ACF0-E219-4FFA-AA32-736B9DEF5809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DE7ACF0-E219-4FFA-AA32-736B9DEF5809}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

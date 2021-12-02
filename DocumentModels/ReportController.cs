@@ -1,9 +1,5 @@
 ﻿using System.Reflection;
 
-//using PdfModels.iText;
-using PdfModels;
-using OcrModels;
-
 namespace SplittingComponents;
 
 public class ReportController
@@ -56,34 +52,36 @@ public class ReportController
     var operationName = "Writing Pdf OverviewReport";
     logControl.StartOperation(operationName);
 
-    var fileNames = Directory.GetFiles(localPdfStoragePath, "*.pdf");
-    if (fileNames.Length == 0)
+    var filePaths = Directory.GetFiles(localPdfStoragePath, "*.pdf");
+    if (filePaths.Length == 0)
     {
       throw new DataException("missing files in local meta storage path...");
     }
 
-    var properties = typeof(PdfDocumentClass).GetProperties();
+    //TODO !!!
+    //var properties = typeof(PdfDocumentInfo).GetProperties();
+    var properties = typeof(PdfDocumentInfo).GetProperties();
 
     var csv = new StringBuilder();
 
     csv.Append("FileName,");
     csv.AppendLine(CsvHeader(properties));
 
-    foreach (var fileName in fileNames)
+    foreach (var filePath in filePaths)
     {
       try
       {
-        using var pdf = new PdfDocumentClass(File.OpenRead(fileName));
+        var fileName = Path.GetFileNameWithoutExtension(filePath);
+        var pdfInfo = XPdfController.PdfInfo(filePath, logControl);
 
         csv.Append($"{fileName},");
-        csv.AppendLine(CsvValues(properties, pdf));
+        csv.AppendLine(CsvValues(properties, pdfInfo));
 
         logControl.IterationPassed(operationName, fileName);
       }
       catch (Exception ex)
       {
-        logControl.Write($"Exception encountered for : `{fileName}`");
-        logControl.Write($" -> Exception message: `{ex.Message}`");
+        logControl.WriteError(ex.Message, filePath);
       }
     }
 
@@ -92,43 +90,42 @@ public class ReportController
   }
 
 
-  public static void WritePdfReport(
-    string pdfFile, string reportFile, LogController logControl)
-  {
-    var operationName = "Writing Pdf Report";
-    logControl.StartOperation(operationName);
+  //public static void WritePdfReport(
+  //  string pdfFile, string reportFile, LogController logControl)
+  //{
+  //  var operationName = "Writing Pdf Report";
+  //  logControl.StartOperation(operationName);
 
 
-    var pdfProps = typeof(PdfDocumentClass).GetProperties();
-    var ocrProps = typeof(OcrClass).GetProperties();
+  //  var pdfProps = typeof(PdfDocumentClass).GetProperties();
+  //  var ocrProps = typeof(OcrClass).GetProperties();
 
-    var csv = new StringBuilder();
-    csv.AppendLine($"{CsvHeader(pdfProps)},{CsvHeader(ocrProps)}");
+  //  var csv = new StringBuilder();
+  //  csv.AppendLine($"{CsvHeader(pdfProps)},{CsvHeader(ocrProps)}");
 
-    try
-    {
-      using var pdf = new PdfDocumentClass(File.OpenRead(pdfFile));
-      using var ocr = new OcrClass();
+  //  try
+  //  {
+  //    using var pdf = new PdfDocumentClass(File.OpenRead(pdfFile));
+  //    using var ocr = new OcrClass();
 
-      csv.Append(CsvValues(pdfProps, pdf));
-
-
-      for (var i = 0; i < ocrProps.Length; i++)
-      {
-
-      }
-
-    }
-    catch (Exception ex)
-    {
-      logControl.Write($"Exception encountered for : `{pdfFile}`");
-      logControl.Write($" -> Exception message: `{ex.Message}`");
-    }
+  //    csv.Append(CsvValues(pdfProps, pdf));
 
 
-    File.WriteAllText(reportFile, csv.ToString());
-    logControl.FinishOperation(operationName);
-  }
+  //    for (var i = 0; i < ocrProps.Length; i++)
+  //    {
+
+  //    }
+
+  //  }
+  //  catch (Exception ex)
+  //  {
+  //    logControl.WriteError(ex.Message, filePath);
+  //  }
+
+
+  //  File.WriteAllText(reportFile, csv.ToString());
+  //  logControl.FinishOperation(operationName);
+  //}
 
 
   private static string CsvHeader(PropertyInfo[] properties)

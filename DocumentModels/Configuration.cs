@@ -31,6 +31,8 @@ public class Configuration
 
   public string LocalPdfStoragePath { get; set; } = string.Empty;
 
+  public string LocalHtmlStoragePath { get; set; } = string.Empty;
+
   public string LocalMetaDataReportFile { get; set; } = string.Empty;
 
   public string LocalPdfReportFile { get; set; } = string.Empty;

@@ -367,3 +367,4 @@ WOB_Pdfs/*
 
 # Do include PDF folder
 !WOB_Pdfs/.gitkeep
+/Xpdf

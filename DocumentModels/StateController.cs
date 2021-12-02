@@ -109,7 +109,7 @@ public class StateController
   }
 
 
-  public async Task RetrievePdfs()
+  public async Task RetrievePdfs(bool overwriteExisting = true)
   {
     if (WobFiles.IsEmpty)
     {
@@ -124,9 +124,10 @@ public class StateController
     {
       foreach (var document in wobFile.Documents)
       {
-        LogControl.IterationPassed(operationName);
+        var documentFileName = wobFile.DocumentFileName(document);
+        await RetrievePdf(document, documentFileName, overwriteExisting);
 
-        await RetrievePdf(document, wobFile.DocumentFileName(document));
+        LogControl.IterationPassed(operationName, $"{wobFile.Id}-{document.Name}");
       }
     }
 
@@ -134,7 +135,8 @@ public class StateController
   }
 
 
-  public async Task RetrievePdf(Document document, string documentName)
+  public async Task RetrievePdf(
+    Document document, string fileName, bool overwriteExisting)
   {
     if (string.IsNullOrWhiteSpace(document.Url))
     {
@@ -144,17 +146,54 @@ public class StateController
 
     try
     {
-      var filePath = StringExtensions.FilePath(Config.LocalPdfStoragePath, documentName);
+      var filePath = StringExtensions.FilePath(Config.LocalPdfStoragePath, fileName);
+      if (overwriteExisting || !File.Exists(filePath))
+      {
+        using var pdfStream = await HttpControl.RetrievePdfStream(document.Url);
+        using var fileStream = File.Create(filePath);
 
-      using var pdfStream = await HttpControl.RetrievePdfStream(document.Url);
-      using var fileStream = File.Create(filePath);
-
-      pdfStream.CopyTo(fileStream);
+        pdfStream.CopyTo(fileStream);
+      }
     }
     // TODO prettify...
     catch (Exception ex)
     {
       HandleException(new DataException(ex.Message), false);
+    }
+  }
+
+
+  public void ConvertPdfsToHtml()
+  {
+    var operationName = "Converting Pdfs to Html";
+    LogControl.StartOperation(operationName);
+
+    var filePaths = Directory.GetFiles(Config.LocalPdfStoragePath, "*.pdf");
+    if (filePaths.Length == 0)
+    {
+      throw new DataException("missing files in local meta storage path...");
+    }
+
+    foreach (var filePath in filePaths)
+    {
+      ConvertPdfToHtml(filePath);
+      LogControl.IterationPassed(operationName);
+    }
+
+    LogControl.FinishOperation(operationName);
+  }
+
+
+  public void ConvertPdfToHtml(string filePath)
+  {
+    try
+    {
+      var fileName = Path.GetFileNameWithoutExtension(filePath);
+      XPdfController.PdfToHtml(filePath, Config.LocalHtmlStoragePath, fileName, LogControl);
+    }
+    catch(Exception ex)
+    {
+
     }
   }
 
